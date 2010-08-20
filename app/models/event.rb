@@ -127,7 +127,7 @@ class Event < ActiveRecord::Base
     if description =~ /\<p/
       description
     else
-      "<p>#{description}</p>"
+      "<p>#{description.gsub(/\n/, "<br/>")}</p>"
     end
   end
   

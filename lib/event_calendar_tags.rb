@@ -407,7 +407,7 @@ module EventCalendarTags
     end
   end
 
-  [:id, :title, :description, :short_description, :location, :url].each do |attribute|
+  [:id, :title, :description, :description_paragraph, :short_description, :location, :url].each do |attribute|
     desc %{ 
       Renders the #{attribute} attribute of the current event.
 
