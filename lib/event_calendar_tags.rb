@@ -62,12 +62,27 @@ module EventCalendarTags
     tag.locals.events ||= get_events(tag)
     result = []
     tag.locals.previous_headers = {}
-    tag.locals.events.each do |event|
+    tag.locals.events.each_with_index do |event, index|
       tag.locals.event = event
       tag.locals.calendar = event.calendar
+      tag.locals.index = index
       result << tag.expand
     end
     result
+  end
+  
+  tag "events:if_index" do |tag|
+    if !tag.attr['gt'].nil?
+      tag.expand if tag.locals.index > tag.attr['gt'].to_i
+    elsif !tag.attr['lt'].nil?
+      tag.expand if tag.locals.index < tag.attr['lt'].to_i
+    elsif !tag.attr['eq'].nil?
+      tag.expand if tag.locals.index == tag.attr['eq'].to_i
+    end
+  end
+  
+  tag "events:if_last" do |tag|
+    tag.expand if tag.locals.index + 1 == tag.locals.events.count
   end
     
   tag "if_events" do | tag|
